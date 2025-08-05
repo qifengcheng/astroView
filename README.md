@@ -16,6 +16,12 @@ Powered by the outstanding [**Skyfield**](https://rhodesmill.org/skyfield/) libr
   - Call sites by name (e.g. **"Mauna Kea"**, **"Paranal"**)
 - **Extensible design**
   - Framework ready for satellites, comets, or planets in future versions
+ 
+## Future work
+
+- In future updates, we plan to add **satellite tracking**, so you could get orbits of Earth satellites by providing TLE (two-line element) data.
+- We also plan to integrate **comet support** (using similar orbital elements approach as asteroids) and possibly connections to the JPL Horizons API for direct queries of any small-body.
+- Additional visualization tools, such as generating sky charts or animations of orbits, are on the roadmap.
 
 ## 📦 Installation
 
