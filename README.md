@@ -13,7 +13,7 @@ Powered by the outstanding [**Skyfield**](https://rhodesmill.org/skyfield/) libr
 - **3-D orbit plots**
   - Matplotlib-based orbit viewer with Sun & Earth for context
 - **Built-in observatory database**
-  - Call sites by name (e.g. **"Mauna Kea"**, **"Paranal"**)
+  - Call sites by name or code (e.g. **"Mauna Kea"**, **"Paranal"**)
 - **Extensible design**
   - Framework ready for satellites, comets, or planets in future versions
  
