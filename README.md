@@ -17,7 +17,7 @@ Powered by the outstanding [**Skyfield**](https://rhodesmill.org/skyfield/) libr
 - **Extensible design**
   - Framework ready for satellites, comets, or planets in future versions
  
-## Future work
+## 🚀 Future work
 
 - In future updates, we plan to add **satellite tracking**, so you could get orbits of Earth satellites by providing TLE (two-line element) data.
 - We also plan to integrate **comet support** (using similar orbital elements approach as asteroids) and possibly connections to the JPL Horizons API for direct queries of any small-body.
