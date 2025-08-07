@@ -4,7 +4,8 @@ version = "0.1.1"
 description = "A tool for visualizing asteroid orbits and sky positions using Skyfield, Astroquery, Plotly, and Matplotlib."
 authors = [
     { name="Thara Caba", email="tharacaba@gmail.com" },
-    { name="Nikoo Hosseininezhad", email="nikoohn1996@gmail.com" }
+    { name="Nikoo Hosseininezhad", email="nikoohn1996@gmail.com" },
+    { name="Qifeng Cheng", email="fionachengqf@gmail.com" }
 ]
 readme = "README.md"
 license = {text = "MIT"}
