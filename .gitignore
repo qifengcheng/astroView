@@ -3,3 +3,6 @@ eggs/
 *.egg-info/
 dist/
 *.egg
+skyfield_data/
+*.bsp
+__pycache__/
