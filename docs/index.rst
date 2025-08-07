@@ -13,5 +13,5 @@ A tool for visualizing asteroid orbits and sky positions using Skyfield, Astroqu
    :maxdepth: 2
    :caption: Contents:
 
-   main.rst
+   viewer.rst
 

@@ -1,6 +1,6 @@
 [project]
 name = "AstroView"
-version = "0.1.2"
+version = "0.1.3"
 description = "A tool for visualizing asteroid orbits and sky positions using Skyfield, Astroquery, Plotly, and Matplotlib."
 authors = [
     { name="Thara Caba", email="tharacaba@gmail.com" },

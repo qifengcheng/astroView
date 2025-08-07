@@ -10,8 +10,8 @@ sys.path.insert(0, os.path.abspath('../astroView/'))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'astroView'
-copyright = '2025, Qifeng Cheng'
-author = 'Qifeng Cheng'
+copyright = '2025, Qifeng Cheng, Thara Caba'
+author = 'Qifeng Cheng, Thara Caba'
 root_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
