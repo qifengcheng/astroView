@@ -20,7 +20,7 @@ Powered by the outstanding [**Skyfield**](https://rhodesmill.org/skyfield/) libr
 ## 📦 Installation
 
 ```bash
-pip install astroview
+pip install AstroView
 
 
 
