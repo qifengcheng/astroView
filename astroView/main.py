@@ -14,44 +14,73 @@ class AsteroidVisualizer:
         self.ts = self.loader.timescale()
 
     def get_heliocentric_position(self, target_name, dates_utc, id_type='smallbody'):
-        jd_times = [self.ts.utc(*t).jd for t in dates_utc]
-        obj = Horizons(id=target_name, location='500', epochs=jd_times, id_type=id_type)
-        eph = obj.vectors()
-        return eph['x'], eph['y'], eph['z']
+      jd_times = [Time(f"{y}-{m:02d}-{d:02d}", format='iso', scale='utc').jd for (y, m, d) in dates_utc]
+      obj = Horizons(id=target_name, location='500', epochs=jd_times, id_type=id_type)
+      eph = obj.vectors()
+      return eph['x'], eph['y'], eph['z']
 
-    def visualize_orbit_3d(self, asteroid_name, start_year=2025):
-        # Time range for 1 year
-        days = self.ts.utc(start_year, 1, range(1, 366))
+    def plot_heliocentric_orbits_3D(self, object_id='Ceres', start='2025-01-01', stop='2025-12-31', step='1d'):
+      # Query Horizons for object ephemerides
+      obj = Horizons(id=object_id, location='@sun',
+                    epochs={'start': start, 'stop': stop, 'step': step})
+      obj_vectors = obj.vectors()
+      
+      # Load ephemeris and timescale
+      eph = load('de421.bsp')
+      earth = eph['earth']
+      sun = eph['sun']
+      ts = load.timescale()
 
-        # Earth's heliocentric orbit
-        earth_pos = self.earth.at(days).observe(self.sun).apparent().position.au
-        earth_x, earth_y, earth_z = -earth_pos[0], -earth_pos[1], -earth_pos[2]
+      # Generate time range
+      start_year = int(start[:4])
+      start_month = int(start[5:7])
+      start_day = int(start[8:10])
+      num_days = len(obj_vectors)  # based on queried data
+      days = ts.utc(start_year, start_month, range(start_day, start_day + num_days))
 
-        # Asteroid's heliocentric orbit
-        jd_list = [t.utc_jpl() for t in days]
-        x_ast, y_ast, z_ast = self.get_heliocentric_position(asteroid_name, [(t.utc.year, t.utc.month, t.utc.day) for t in days])
+      # Earth's heliocentric orbit (reverse vector)
+      pos = earth.at(days).observe(sun).apparent().position.au
+      x, y, z = -pos[0], -pos[1], -pos[2]
+      x0, y0, z0 = x[0], y[0], z[0]
 
-        fig = go.Figure()
+      # Object heliocentric orbit (reverse vector)
+      x2, y2, z2 = -obj_vectors['x'], -obj_vectors['y'], -obj_vectors['z']
+      x02, y02, z02 = x2[0], y2[0], z2[0]
 
-        fig.add_trace(go.Scatter3d(x=earth_x, y=earth_y, z=earth_z, mode='lines', name='Earth Orbit'))
-        fig.add_trace(go.Scatter3d(x=x_ast, y=y_ast, z=z_ast, mode='lines', name=f'{asteroid_name} Orbit'))
-        fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[0],
-                                   mode='markers',
-                                   marker=dict(size=6, color='yellow'),
-                                   name='Sun'))
+      # Plot
+      fig = go.Figure()
 
-        fig.update_layout(
-            scene=dict(
-                xaxis_title='X (AU)',
-                yaxis_title='Y (AU)',
-                zaxis_title='Z (AU)',
-                aspectmode='data'
-            ),
-            title=f'Orbit Around the Sun: Earth and {asteroid_name}',
-            margin=dict(l=0, r=0, b=0, t=30)
-        )
+      fig.add_trace(go.Scatter3d(x=x, y=y, z=z, mode='lines', name='Earth Orbit'))
+      fig.add_trace(go.Scatter3d(x=x2, y=y2, z=z2, mode='lines', name=f'{object_id} Orbit'))
 
-        fig.show()
+      fig.add_trace(go.Scatter3d(x=[0], y=[0], z=[0],
+                                mode='markers',
+                                marker=dict(size=6, color='yellow'),
+                                name='Sun'))
+
+      fig.add_trace(go.Scatter3d(x=[x0], y=[y0], z=[z0],
+                                mode='markers',
+                                marker=dict(size=6, color='blue', symbol='circle'),
+                                name='Earth (Start of Year)'))
+
+      fig.add_trace(go.Scatter3d(x=[x02], y=[y02], z=[z02],
+                                mode='markers',
+                                marker=dict(size=6, color='red', symbol='circle'),
+                                name=f'{object_id} (Start of Year)'))
+
+      fig.update_layout(
+          scene=dict(
+              xaxis_title='X (AU)',
+              yaxis_title='Y (AU)',
+              zaxis_title='Z (AU)',
+              aspectmode='data'
+          ),
+          title=f'Orbit Around the Sun: Earth and {object_id}',
+          margin=dict(l=0, r=0, b=0, t=30)
+      )
+
+      #fig.show()
+      return fig
 
     def visualize_skyview(self, objects, obs_code='500', obs_time_utc='2025-08-05 10:00'):
         t_astropy = Time(obs_time_utc)
