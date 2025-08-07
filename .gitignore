@@ -6,3 +6,4 @@ dist/
 skyfield_data/
 *.bsp
 __pycache__/
+*.pyc

@@ -17,10 +17,5 @@ Powered by the outstanding [**Skyfield**](https://rhodesmill.org/skyfield/) libr
 - **Extensible design**
   - Framework ready for satellites, comets, or planets in future versions
 
-## 📦 Installation
-
-```bash
-pip install AstroView
-
 
 
